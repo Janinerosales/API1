@@ -3,7 +3,7 @@
 include '../Abstract/interface.php';
 include '../Database/database.php';
 
-class users extends Database implements user
+class Users extends Database implements user
 {
   public function createTable()
   {
@@ -15,7 +15,7 @@ class users extends Database implements user
         first_name varchar(255) not null,
         last_name varchar(255) not null,
         address varchar(255) not null,
-        phone_number int
+        email varchar(50) not null
         )";
 
     $this->conn->query($create);
@@ -119,11 +119,11 @@ if (!isset($params['address']) || empty($params['address'])){
   'message' => 'address is required',
  ]);
  }
- if (!isset($params['phone_number']) || empty($params['phone_number'])){
+ if (!isset($params['email']) || empty($params['email'])){
 
   return json_encode([
   'code' => 422,
-  'message' => 'phone_number is required',
+  'message' => 'email is required',
  ]);
  }
 
@@ -131,10 +131,10 @@ if (!isset($params['address']) || empty($params['address'])){
 $firstName = $params['first_name'];
 $last_name = $params['last_name'];
 $address = $params['address'];
-$phone_number = isset($params['phone_number']) ? $params['phone_number'] : '';
+$email = isset($params['email']) ? $params['email'] : '';
 
-$insert = "INSERT INTO users(first_name, last_name, address, phone_number) 
-VALUES('$firstName', '$last_name', '$address', '$phone_number')";
+$insert = "INSERT INTO users(first_name, last_name, address, email) 
+VALUES('$firstName', '$last_name', '$address', '$email')";
 
 $isAdded = $this->conn->query($insert);
 
@@ -184,11 +184,11 @@ if (!isset($params['address']) || empty($params['address'])){
   'message' => 'address is required',
  ]);
 }
-if (!isset($params['phone_number']) || empty($params['phone_number'])){
+if (!isset($params['email']) || empty($params['email'])){
 
   return json_encode([
   'code' => 422,
-  'message' => 'phone_number is required',
+  'message' => 'email is required',
   ]);
 }
 if (!isset($params['id']) || empty($params['id'])){
@@ -202,10 +202,10 @@ $id = $params['id'];
 $firstName = $params['first_name'];
 $last_name = $params['last_name'];
 $address = $params['address'];
-$phone_number = isset($params['phone_number']) ? $params['phone_number'] : '';
+$email = isset($params['email']) ? $params['email'] : '';
 
 $update = "UPDATE users
-       SET first_name = '$firstName', last_name = '$last_name', address = '$address', phone_number = '$phone_number'
+       SET first_name = '$firstName', last_name = '$last_name', address = '$address', email = '$email'
        where id = '$id' ";
 
 $isUpdated = $this->conn->query($update);
